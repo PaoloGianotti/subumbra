@@ -3184,7 +3184,7 @@ document.addEventListener('keydown', e=>{
   if (titleScreen) { titleInput(e); return; }
 
   if (classSelect) {
-    if (e.key==='Escape') { classSelect=false; resize(); return; }
+    if (e.key==='Escape') { classSelect=false; titleScreen=true; renderTitle(); return; }
     if (e.key==='ArrowUp'||e.key==='w') { classCursor=(classCursor-1+CLASSES.length)%CLASSES.length; renderClassSelect(); return; }
     if (e.key==='ArrowDown'||e.key==='s') { classCursor=(classCursor+1)%CLASSES.length; renderClassSelect(); return; }
     if (e.key>='1'&&e.key<='4') { classCursor=parseInt(e.key)-1; renderClassSelect(); return; }
@@ -3719,13 +3719,9 @@ function titleInput(e) {
   const startNew = (diff) => {
     pendingDifficulty = diff;
     classSelect = true;
+    titleScreen = false;
     classCursor = 0;
-    resize();
-    deleteSave();
-    newGame();
-    resize();
-    const diffNames = {easy:'Easy 🟢', normal:'Normal 🟡', hardcore:'Hardcore 🔴'};
-    msg(`Difficulty: ${diffNames[diff]}`, diff==='easy'?'#8f8':diff==='hardcore'?'#f44':'#ff6');
+    renderClassSelect();
   };
   if (e.key==='1') startNew('easy');
   else if (e.key==='2'||e.key==='n'||e.key==='N') startNew('normal');
