@@ -328,14 +328,14 @@ const ENEMY_DEFS = [
 // ─────────────────────────────────────────
 const CLASSES = [
   {
-    id:'gladiator', name:'Gladiator', icon:'⚔️',
+    id:'gladiator', name:'Gladiator', icon:'⚔️', playerCh:'🤺',
     desc:'A former arena fighter. Excels in melee combat.',
     stats: { str:5, dex:2, int:1, vit:4, wil:1 },
     passive: { name:'Arena Fury', desc:'+25% melee damage', meleeDmgMult:1.25 },
     startItem: { ch:'⚔️', type:'weapon', name:'Gladius', col:'#aaf', effect:'weapon', power:4, weight:20 },
   },
   {
-    id:'venator', name:'Venator', icon:'🏹',
+    id:'venator', name:'Venator', icon:'🏹', playerCh:'🧝',
     desc:'An Alpine hunter. Deadly at range, keen eyes.',
     stats: { str:2, dex:5, int:1, vit:3, wil:2 },
     passive: { name:"Hunter's Eye", desc:'+3 sight, +15% crit', sightBonus:3, critBonus:15 },
@@ -343,14 +343,14 @@ const CLASSES = [
     startAmmo: { ch:'🎯', type:'ammo', name:'Arrows', col:'#fa0', effect:'ammo', power:4, weight:25, qty:15, known:true },
   },
   {
-    id:'haruspex', name:'Haruspex', icon:'🔮',
+    id:'haruspex', name:'Haruspex', icon:'🔮', playerCh:'🧙',
     desc:'A priest who reads the entrails. Wields ancient power.',
     stats: { str:1, dex:2, int:5, vit:2, wil:3 },
     passive: { name:'Divination', desc:'+2 MP regen/floor, see enemies', mpRegenFloor:2, seeEnemies:true },
     startItem: { ch:'🧪', type:'potion', name:'Healing Salve', col:'#f4f', effect:'heal', power:20, weight:30 },
   },
   {
-    id:'architectus', name:'Architectus', icon:'🏗️',
+    id:'architectus', name:'Architectus', icon:'🏗️', playerCh:'⛏️',
     desc:'The stonemason of the story. Balanced, resourceful.',
     stats: { str:3, dex:3, int:2, vit:3, wil:2 },
     passive: { name:'Stonecraft', desc:'+50% craft success, more items', craftBonus:0.5, itemFind:1.5 },
@@ -1291,6 +1291,7 @@ function newGame() {
     p.vit = cls.stats.vit; p.wil = cls.stats.wil;
     p.className = cls.name; p.classIcon = cls.icon;
     p.classPassive = cls.passive;
+    p.playerCh = cls.playerCh || '🏛️';
     if (cls.startItem) {
       const item = {...cls.startItem, known:true};
       if (item.type === 'weapon') { p.weapon = item; }
@@ -2381,7 +2382,7 @@ function renderMerchant() {
 function renderPlayer() {
   const {sx,sy}=toScreen(G.player.x,G.player.y);
   ctx.font=EFONT;
-  ctx.fillText('🏛️',sx+2,sy+2);
+  ctx.fillText(G.player.playerCh||'🏛️',sx+2,sy+2);
   ctx.font=FONT;
 }
 
